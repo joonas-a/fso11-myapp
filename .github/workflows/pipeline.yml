@@ -1,0 +1,57 @@
+name: Deployment pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+
+jobs:
+  backend_test_phase:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: install dependencies
+        run: npm ci
+      - run: npm test
+
+  frontend_unit_tests:
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - name: Install dependencies
+        run: npm ci
+      - run: npm run build
+      - run: npm run eslint
+      - run: npm test
+
+  cypress_e2e_tests:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install backend dependencies
+        uses: cypress-io/github-action@v5
+        with:
+          install-command: npm install
+          runTests: false
+      - name: Install frontend dependencies
+        uses: cypress-io/github-action@v5
+        with:
+          install-command: npm run install:front
+          runTests: false
+
+      - name: E2E tests
+        uses: cypress-io/github-action@v5
+        with:
+          command: npm run cypress:cli
+          start: npm start, npm run start:front
+          wait-on: http://localhost:3000, http://localhost:3003
