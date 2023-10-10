@@ -11,6 +11,11 @@ on:
 jobs:
   backend_test_phase:
     runs-on: ubuntu-20.04
+    env:
+      MONGODB_URI: ${{ secrets.MONGODB_URI }}
+      MONGODB_TEST_URI: ${{ secrets.MONGODB_TEST_URI }}
+      PORT: ${{ secrets.PORT }}
+      SECRET: ${{ secrets.SECRET }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -36,6 +41,11 @@ jobs:
 
   cypress_e2e_tests:
     runs-on: ubuntu-20.04
+    env:
+      MONGODB_URI: ${{ secrets.MONGODB_URI }}
+      MONGODB_TEST_URI: ${{ secrets.MONGODB_TEST_URI }}
+      PORT: ${{ secrets.PORT }}
+      SECRET: ${{ secrets.SECRET }}
     steps:
       - uses: actions/checkout@v3
       - name: Install backend dependencies
