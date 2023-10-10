@@ -49,15 +49,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install backend dependencies
-        uses: cypress-io/github-action@v5
-        with:
-          install-command: npm install
-          runTests: false
+        run: npm install
       - name: Install frontend dependencies
-        uses: cypress-io/github-action@v5
-        with:
-          install-command: npm run install:front
-          runTests: false
+        working-directory: frontend
+        run: npm install
 
       - name: E2E tests
         uses: cypress-io/github-action@v5
