@@ -64,4 +64,4 @@ jobs:
         with:
           command: npm run cypress:cli
           start: npm start, npm run start:front
-          wait-on: http://localhost:3000, http://localhost:3003
+          wait-on: http://localhost:3003
