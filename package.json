@@ -10,7 +10,7 @@
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
     "install:front": "cd frontend && npm install",
     "start:front": "cd frontend && react-scripts start",
-    "cypress": "cd frontend && cypress run"
+    "cypress:cli": "cd frontend && cypress run"
   },
   "author": "",
   "license": "ISC",
@@ -32,6 +32,7 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "globalTeardown": "./tests/teardown.js"
+    "globalTeardown": "./tests/teardown.js",
+    "modulePathIgnorePatterns": ["frontend"]
   }
 }
