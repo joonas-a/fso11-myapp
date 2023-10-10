@@ -58,5 +58,5 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           command: npm run cypress:cli
-          start: npm start:test, npm run start:front
+          start: npm run start:test, npm run start:front
           wait-on: http://localhost:3003
