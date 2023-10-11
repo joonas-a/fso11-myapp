@@ -11,7 +11,8 @@
     "install:front": "cd frontend && npm install",
     "start:front": "cd frontend && npm start",
     "build:front": "cd frontend && npm run build",
-    "cypress:cli": "cd frontend && npm run cypress:cli"
+    "cypress:cli": "cd frontend && npm run cypress:cli",
+    "render:build": "rm -rf build && cd ./frontend && npm run build && cp -r build ../"
   },
   "author": "",
   "license": "ISC",

@@ -61,3 +61,18 @@ jobs:
           command: npm run cypress:cli
           start: npm run start:test, npm run start:front
           wait-on: 'http://localhost:3000'
+
+  deploy:
+    needs: ['cypress_e2e_tests']
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Deploy to render
+        if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message), ', '), '#skip') }}
+        run: curl ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+      - uses: actions/checkout@v3
+      - name: Bump version and push tag
+        if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message), ', '), '#skip') }}
+        uses: anothrNick/github-tag-action@1.67.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
